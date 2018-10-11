@@ -1,3 +1,4 @@
+# Function to predict Price based on three statistical Method
 def forecast_price(stock_symbol):
     # list of all prices for the recent month's
     BAC = [29.9, 32.5, 31.48, 29.31, 29.95, 29.4, 28.28, 31.25, 30.93]
