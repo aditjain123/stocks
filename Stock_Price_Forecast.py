@@ -1,7 +1,10 @@
-# Add Program Documentaion here
-# Function to predict Price based on three statistical Method
+#This program forecasts the stock price for the 35 most traded stocks in US market. It collects the prices for these stocks at the beginning
+#of each month and then uses statistical and computaional methods to predict the next month's forecasted price. The program utilizes standard compuational methods such as exponetnial smoothing,
+# moving averages, and a custom statistical method created by me based on z scores.
+
+#Function to predict Price based on three statistical Method
 def forecast_price(stock_symbol):
-    # list of all prices for the recent month's
+    # list of all the prices at the beginning of the recent months
     BAC = [29.9, 32.5, 31.48, 29.31, 29.95, 29.4, 28.28, 31.25, 30.93]
     T = [37.65, 39.16, 36, 35.1, 32.54, 32.47, 32.21, 31.9, 31.94]
     GE = [17.98, 16.02, 14.02, 13.12, 14.05, 14.1, 13.37, 13.24,12.67]
@@ -41,6 +44,7 @@ def forecast_price(stock_symbol):
     mae = 0
 
     # function selection
+    # a value represents alpha constant for the exponential smoothing method
     if stock_symbol == 'BAC':
         stock_array_mini = BAC[:-1]
         stock_array_full = BAC
@@ -181,7 +185,8 @@ def forecast_price(stock_symbol):
 
     print ('the price of this stock in the beginning of last month was ${}'.format(stock_array_full[-1]))
 
-    # Expoential smoothing technique - assigns exponentially decreasing weights for newest to oldest observations newer data is seen as more relevant and is assigned more weight`
+    # Exponential smoothing technique - assigns exponentially decreasing weights for newest
+    # to oldest observations newer data is seen as more relevant and is assigned more weight
     #Smoothing parameters denoted by a determine the weights for observations.
     smoothing_2 = stock_array_full[0]
     smoothing_3 = a * stock_array_full[1] + (1 - a) * smoothing_2
@@ -214,7 +219,8 @@ def forecast_price(stock_symbol):
 
     ma = masum / madivide
 
-    # Following technique is developed by me, it is based on Z scores. First it finds the z-score with all the data except the last one. To find the next month's price
+    # Following technique is developed by me, it is based on Z scores. First it finds the z-score with all the data except the last one.
+    # To find the next month's price
     #mulitply the z score by the standard deviation for all the values in the list and then add the product to the mean value.
 
     first_mean = float(sum(stock_array_mini) / max(len(stock_array_mini), 1))
@@ -262,7 +268,8 @@ def forecast_price(stock_symbol):
             print ("The stock price around the beginning of next month would be ${} ".format(round(ze, 2)))
         else:
 
-        # If the z score does not fit in those parameters then find the simple average of the expoential smoothing and moving average methods to predict the stock price
+        # If the z score does not fit in those parameters then find the simple average of the expoential smoothing
+        #  and moving average methods to predict the stock price
 
             mae = (smoothing_10 + ma) / 2
             if mae > stock_array_full[-1]:
